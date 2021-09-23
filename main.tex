@@ -1,0 +1,329 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% DOCUMENT PREAMBLE %%%
+\documentclass[12pt]{report}
+\usepackage[english]{babel}
+%\usepackage{natbib}
+\usepackage{url}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\graphicspath{{images/}}
+\usepackage{parskip}
+\usepackage{fancyhdr}
+\usepackage{vmargin}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codeblue}{rgb}{0,0,0.95}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{codeblue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codegreen},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+ 
+\lstset{style=mystyle}
+
+\setmarginsrb{3 cm}{2.5 cm}{3 cm}{2.5 cm}{1 cm}{1.5 cm}{1 cm}{1.5 cm}
+
+\title{Lab3}								
+% Title
+\author{ Shujaea Aldousari}						
+% Author
+\date{Sep 23, 2021}
+% Date
+
+\makeatletter
+\let\thetitle\@title
+\let\theauthor\@author
+\let\thedate\@date
+\makeatother
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\theauthor}
+\lhead{\thetitle}
+\cfoot{\thepage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{titlepage}
+	\centering
+    \vspace*{0.5 cm}
+   % \includegraphics[scale = 0.075]{bsulogo.png}\\[1.0 cm]	% University Logo
+\begin{center}    \textsc{\Large   ECE 351 - Section 52 \# }\\[2.0 cm]	\end{center}% University of Idaho
+	\textsc{\Large Lab 3 Report  }\\[0.5 cm]				% Course Code
+	\rule{\linewidth}{0.2 mm} \\[0.4 cm]
+	{ \huge \bfseries \thetitle}\\
+	\rule{\linewidth}{0.2 mm} \\[1.5 cm]
+	
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushleft} \large
+		%	\emph{Submitted To:}\\
+		%	Name\\
+          % Affiliation\\
+           %contact info\\
+			\end{flushleft}
+			\end{minipage}~
+			\begin{minipage}{0.4\textwidth}
+            
+			\begin{flushright} \large
+			\emph{Submitted By :} \\
+			Shujaea Aldousari  
+		\end{flushright}
+           
+	\end{minipage}\\[2 cm]
+	
+%	\includegraphics[scale = 0.5]{PICMathLogo.png}
+    
+    
+    
+    
+	
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tableofcontents
+\pagebreak
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\thesection}{\arabic{section}}
+\section{Introduction}
+ 
+
+In lab 3, we were introduced with convolutions. The purpose of this lab is to understand /learn about convolutions .
+
+
+\section{Part 1}
+
+In part one we were asked to use the previous step and ramp functions from the previous lab, Which has been developed, edited and used in this lab.
+
+
+
+
+
+\begin{lstlisting}[language=Python]
+
+
+def step(t):
+    y = np.zeros((len(t),1))
+    for i in range(len(t)):
+        if t[i] >= 0:
+            y[i] = 1
+        else:
+
+            y[i]= 0
+
+    return y       
+
+steps = 1e-4
+
+t = np.arange(-5, 10 + steps, steps)
+y = step(t)
+
+def ramp(t):
+
+    y = np.zeros((len(t),1))
+
+    for i in range(len(t)):
+
+        if t[i]>=0:
+
+            y[i] = t[i]
+
+        else:
+
+            y[i] = 0
+
+    return y      
+
+y = ramp(t)
+
+def f1(t):
+
+    y = step(t- 2) - step(t - 9)
+
+    return y
+
+
+def f2(t):
+
+    y = np.exp(-t)
+
+    return y
+
+def f3(t):
+
+    y =  ramp(t - 2)*(step(t - 2) - step(t - 3)) + ramp(4 - t)*(step(t - 3) - step(t - 4))
+
+   
+    return y
+
+steps = 1e-2
+
+t = np.arange(0, 20 + steps, steps)
+
+plt.figure(figsize = (10, 7))
+plt.subplot(3, 1, 1)
+plt.plot(t, f1(t))
+plt.ylabel('f1(t)')
+plt.title('User Defined Function ')
+plt.ylim([0, 1.2])
+plt.grid()
+plt.show()
+plt.subplot(3, 1, 2)
+plt.plot(t, f2(t))
+plt.ylabel('f2(t)')
+plt.ylim([0, 1.2])
+plt.grid()
+plt.show()
+plt.subplot(3, 1, 3)
+plt.plot(t, f3(t))
+plt.ylabel('f3(t)')
+plt.ylim([0, 1.2])
+plt.grid()
+plt.xlabel('t(s)')
+plt.show()
+
+
+
+\end{lstlisting}
+
+I tried attaching the plots here but it did not work for some reason. I used the following commands with including ' \ ' but it would not work.
+includegraphics[]{1.png}
+includegraphics[]{2.png}
+includegraphics[]{3.png}
+
+\section{Part 2 }
+
+In the second part, we were asked to create a convulsion functions for f1 and f2,f2 and f3,and f1 and f3. During the time I was creating the code, I faced a problem which was the size of f1 and f2 is different for some reason so it is not working.
+
+\begin{lstlisting}[language=Python]
+def con(fu1, fu2):
+    conf1=len(fu1)
+    conf2=len(fu2)
+    f1E = np.append(fu1, np.zeros((1, conf2-1)))
+    f2E = np.append(fu2, np.zeros((1, conf1-1)))
+    Value = np.zeros(f1E.shape)
+    for i in range (conf2 + conf1 - 2):
+        Value[i] = 0
+        for j in range(conf1):
+            if(i - j + 1 > 0):
+                try:
+                    Value[i] += f1E[i]*f2E[i - j + 1]
+                except:
+                    print(i,j)
+    return Value
+                  
+steps = 1e-2
+t = np.arange(0, 20 + steps, steps)
+Num = len(t)
+tE = np.arange(0, 2*t[Num - 1], steps)
+
+fu1 = f1(t)
+fu2 = f2(t)
+fu3 = f3(t)
+
+
+con12 = con(fu1, fu2)*steps
+# con12Check = sig.convolve(fu1, fu2)*steps
+# size of f1 and f2 is differnt for some reason so it is not working.
+
+plt.figure(figsize = (10, 7))
+plt.plot(tE, con12, label = ".fined Conv")
+# plt.plot(tE, con12Check, '-', label = 'Built in Conv')
+plt.ylim([0, 1.2])
+plt.grid()
+plt.legend()
+plt.xlabel('t(s)')
+plt.ylabel('fun1(t) * fun2(t)')
+plt.title('Conv of fun1 , fun2')
+plt.show()
+
+con23 = con(fu2, fu3)*steps
+# con23Check = sig.convolve(fu2, fu3)*steps
+
+plt.figure(figsize = (10, 7))
+plt.plot(tE, con23, label = 'User defined Conv')
+# plt.plot(tE, con23Check, '-', label = 'Built in Conv')
+plt.ylim([0, 0.2])
+plt.grid()
+plt.legend()
+plt.xlabel('t [s]')
+plt.ylabel('f_2(t) * f_3(t)')
+plt.title('Convolution of f_2 and f_3')
+plt.show()
+
+con13 = con(fu1, fu3)*steps
+con13Check = sig.convolve(fu1, fu3)*steps
+
+plt.figure(figsize = (10, 7))
+plt.plot(tE, con13, label = 'User defined Conv')
+plt.plot(tE, con13Check, '-', label = 'Built in Conv')
+plt.ylim([0, 1.2])
+plt.grid()
+plt.legend()
+plt.xlabel('t [s]')
+plt.ylabel('f_1(t) * f_3(t)')
+plt.title('Convolution of f_1 and f_3')
+plt.show()
+
+\end{lstlisting}
+
+I tried attaching the plots here but it did not work for some reason. I used the following commands with including ' \ ' but it would not work.
+includegraphics[]{4.png}
+includegraphics[]{5.png}
+includegraphics[]{6.png}
+
+
+
+
+\section{Questions}
+
+1. Did you work alone or with classmates on this lab? If you collaborated to get to the solution,
+what did that process look like?
+2. What was the most difficult part of this lab for you, and what did your problem-solving
+process look like?
+2
+3. Did you approach writing the code with analytical or graphical convolution in mind? Why
+did you chose this approach?
+4. Leave any feedback on the clarity of lab tasks, expectations, and deliverables.
+
+1. I worked with my classmates in how we can create the code for the convolution.
+2. The most difficult part was creating the code for f1 and f2,f2 and f3, f1 and f3.
+3.
+
+
+
+\section{conclusion}
+
+
+Overall, the main idea of this lab to introduce new things such as convolution. Also, sometimes there is always an easier way for creating codes, which depends on the ability/skills that can be developed during labs.
+
+\newpage
+
+
+
+\end{document}
+
+%This template was created by Roza Aceska.
